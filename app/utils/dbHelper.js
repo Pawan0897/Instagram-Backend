@@ -1,4 +1,3 @@
-
 const dbHelper = {
     // Create a new document
     create: (Model, data) => {
@@ -10,13 +9,11 @@ const dbHelper = {
             throw error;
         }
     },
-
-
     // Find one document
     findOne: (Model, query, projection = {}, options = {}) => {
         return Model.findOne(query, projection, options);
     },
- 
+
     // Find multiple documents
     find: (Model, query = {}, projection = {}, options = {}) => {
         try {

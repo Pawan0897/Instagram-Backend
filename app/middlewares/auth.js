@@ -60,6 +60,8 @@ module.exports.verify = (...args) => async (req, res, next) => {
 
     const decoded = this.verifyToken(token);
 
+    console.log("Decoded Token:", decoded);
+    console.log("Token ID:", decoded._id);
     if (!decoded) {
       console.error("Token decode failed", token);
       return res.status(401).send({
@@ -72,7 +74,9 @@ module.exports.verify = (...args) => async (req, res, next) => {
     }
 
     const doc = await Model.Sessions.findById(decoded._id).populate("userId");
-
+    console.log("Session Document:", doc);
+    console.log("User Role:", doc?.userId?.role);
+    console.log("Expected Roles:", roles);
     if (!doc) {
       console.error("Token user not found", decoded);
       return res.status(401).send({

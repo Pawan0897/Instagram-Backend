@@ -55,7 +55,7 @@ const encryptData = (data, deviceType) => {
         return encryptionWithCrypto(data);
     }
 };
-
+// *..........>>>>>>..----->>>>>
 module.exports = {
     encryptWithCrypto,
     encryptWithCryptoJS,

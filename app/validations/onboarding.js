@@ -14,20 +14,31 @@ module.exports.create = Joi.object({
 });
 
 
-module.exports.signup = Joi.object({
-  phone: Joi.string().optional().regex(/^[0-9]+$/).min(8).max(15),
-  otpType: Joi.number().required().valid(...Object.values(constants.OTP_TYPE)).description("1 for signup, 2 for login, 3 for forget 4 for update"),
-  countryCode: Joi.string().when('phone', {
-    is: Joi.exist(),
-    then: Joi.required(),
-    otherwise: Joi.optional()
-  }).regex(/^\+\d{1,3}$/),
-  email: Joi.string().email().optional().error(new Error("Please Enter a valid email")),
-  password: Joi.string().optional().error(new Error("Please Enter a strong password")),
+// module.exports.signup = Joi.object({
+//   phone: Joi.string().optional().regex(/^[0-9]+$/).min(8).max(15),
+//   otpType: Joi.number().required().valid(...Object.values(constants.OTP_TYPE)).description("1 for signup, 2 for login, 3 for forget 4 for update"),
+//   countryCode: Joi.string().when('phone', {
+//     is: Joi.exist(),
+//     then: Joi.required(),
+//     otherwise: Joi.optional()
+//   }).regex(/^\+\d{1,3}$/),
+//   email: Joi.string().email().optional().error(new Error("Please Enter a valid email")),
+//   password: Joi.string().optional().error(new Error("Please Enter a strong password")),
+//   deviceToken: Joi.string().optional(),
+//   deviceType: Joi.string().valid(...Object.values(constants.DEVICETYPE)).optional().description("WEB,ANDROID,IOS"),
+//   role: Joi.number().optional()
+// }).or('phone', 'email');
+
+module.exports.register = Joi.object({
+  firstName: Joi.string().required(),
+  lastName: Joi.string().optional(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  phone: Joi.string().optional(),
+  countryCode: Joi.string().optional(),
   deviceToken: Joi.string().optional(),
-  deviceType: Joi.string().valid(...Object.values(constants.DEVICETYPE)).optional().description("WEB,ANDROID,IOS"),
-  role: Joi.number().optional()
-}).or('phone', 'email');
+  deviceType: Joi.string().valid(...Object.values(constants.DEVICETYPE)).optional(),
+});
 
 
 module.exports.sendOtp = Joi.object({
@@ -51,8 +62,8 @@ module.exports.socialLogin = Joi.object({
   longitude: Joi.number().optional(),
   image: Joi.string().optional(),
   email: Joi.string().when("socialType", {
-    is: constants.SOCIAL_TYPE.GOOGLE, 
-    then: Joi.required() 
+    is: constants.SOCIAL_TYPE.GOOGLE,
+    then: Joi.required()
   }).optional(),
   countryCode: Joi.string().optional(),
   phone: Joi.string().optional(),
@@ -89,20 +100,20 @@ module.exports.updateProfile = Joi.object({
   phone: Joi.string().optional(),
   countryCode: Joi.string().optional(),
   password: Joi.string().optional(),
-  image: Joi.string().optional().allow("",null),
+  image: Joi.string().optional().allow("", null),
   isProfileCompleted: Joi.boolean().optional(),
   gender: Joi.number().valid(...Object.values(constants.GENDER)).optional(),
-  dob : Joi.string().optional().error(new Error("Please Enter a DOB")),
-  location : Joi.string().optional().error(new Error("Please Enter a location")),
-  qualification : Joi.string().optional().error(new Error("Please Enter a qualification")),
-  grades : Joi.string().optional().error(new Error("Please Enter a grades")),
-  workExperience : Joi.string().optional().error(new Error("Please Enter a workExperience ")),
-  studyPreferences : Joi.number().valid(...Object.values(constants.STUDY_PREFERENCES)).optional(),
-  studyLocation : Joi.array().items(Joi.number().valid(...Object.values(constants.STUDY_LOCATION))).optional(),
-  institutionType : Joi.array().items(Joi.number().valid(...Object.values(constants.UNIVERSITY_TYPES))).optional(),
+  dob: Joi.string().optional().error(new Error("Please Enter a DOB")),
+  location: Joi.string().optional().error(new Error("Please Enter a location")),
+  qualification: Joi.string().optional().error(new Error("Please Enter a qualification")),
+  grades: Joi.string().optional().error(new Error("Please Enter a grades")),
+  workExperience: Joi.string().optional().error(new Error("Please Enter a workExperience ")),
+  studyPreferences: Joi.number().valid(...Object.values(constants.STUDY_PREFERENCES)).optional(),
+  studyLocation: Joi.array().items(Joi.number().valid(...Object.values(constants.STUDY_LOCATION))).optional(),
+  institutionType: Joi.array().items(Joi.number().valid(...Object.values(constants.UNIVERSITY_TYPES))).optional(),
   socialAccount: Joi.number().valid(...Object.values(constants.SOCIAL_ACCOUNT)).optional().description("Public ,Private"),
 
-}); 
+});
 
 
 module.exports.verifyOtp = Joi.object({
@@ -119,7 +130,7 @@ module.exports.verifyOtp = Joi.object({
 module.exports.changePassword = Joi.object({
   oldPassword: Joi.string().optional(),
   newPassword: Joi.string().required(),
-  resetPassword : Joi.boolean().optional()
+  resetPassword: Joi.boolean().optional()
 });
 
 // /**

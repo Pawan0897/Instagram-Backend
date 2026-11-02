@@ -22,8 +22,8 @@ const Schema = new Mongoose.Schema({
   qrImage: { type: String },
   location: { type: String },
   qualification: { type: String },
-  socialAccount:{type: Number, enum: Object.values(constants.SOCIAL_ACCOUNT),default:constants.SOCIAL_ACCOUNT.PUBLIC},
-  gender: {type: Number,enum: Object.values(constants.GENDER)},
+  socialAccount: { type: Number, enum: Object.values(constants.SOCIAL_ACCOUNT), default: constants.SOCIAL_ACCOUNT.PUBLIC },
+  gender: { type: Number, enum: Object.values(constants.GENDER) },
   grades: { type: String },
   workExperience: { type: String },
   studyPreferences: {
@@ -31,14 +31,14 @@ const Schema = new Mongoose.Schema({
     enum: Object.values(constants.STUDY_PREFERENCES)
   },
   studyLocation: {
-    type:  Number,
+    type: Number,
     enum: Object.values(constants.STUDY_LOCATION)
   },
   institutionType: {
     type: Number,
     enum: Object.values(constants.UNIVERSITY_TYPES)
   },
-  
+
 
   // stripeCustomerId: { type: String },
   // stripeSubscriptionId: { type: String },
@@ -152,7 +152,7 @@ module.exports.getUser = (id, qry = {}, extraSelect = {}) => {
   return User.findOne({ _id: id, isDeleted: false, ...qry })
     .select({
 
-      
+
       firstName: 1,
       lastName: 1,
       dateOfBirth: 1,
@@ -225,3 +225,6 @@ module.exports.list = (filter, skip, limit) => {
     return res;
   });
 };
+
+
+

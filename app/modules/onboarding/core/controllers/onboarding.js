@@ -164,8 +164,18 @@ const create = async (req, res, next) => {
 
 
 
+// *************************************************************************
 
+const signup = async (req, res, next) => {
+    try {
+        const { data, message } = await Services.onboarding.signup(req.body);
+        return res.success(message, data);
+    } catch (err) {
+        next(err);
+    }
+};
 
+router.post("/signup", Validator(Validations.Onboarding.register), signup);
 
 
 

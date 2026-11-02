@@ -387,4 +387,22 @@ router.get("/logout", Auth.verify("admin", "sub_admin"), logout);
  */
 router.put("/", Auth.verify("admin", "sub_admin"), Validator(Validations.Onboarding.updateProfile), updateProfile);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
